@@ -38,10 +38,6 @@ window.addEventListener('keydown', function(event){
         break;
         case 'Enter':
         playerTurn(currentchoice, currentcolor);
-        toggleColor();
-        play.children[currentchoice].innerHTML = "";
-        currentchoice = 0;
-        play.children[currentchoice].appendChild(puckimg(currentcolor))
     }
 })
 
@@ -72,19 +68,50 @@ function puckimg(color){
             return x;
     }
 }
+
 function playerTurn(x, color){
     if(gameboard.children[x+35].innerHTML === ""){
         gameboard.children[x+35].appendChild(puckimg(color));
+        toggleColor();
+        play.children[currentchoice].innerHTML = "";
+        currentchoice = 0;
+        play.children[currentchoice].appendChild(puckimg(currentcolor))
+
     }else if(gameboard.children[x+28].innerHTML === ""){
         gameboard.children[x+28].appendChild(puckimg(color));
+        toggleColor();
+        play.children[currentchoice].innerHTML = "";
+        currentchoice = 0;
+        play.children[currentchoice].appendChild(puckimg(currentcolor))
+
     }else if(gameboard.children[x+21].innerHTML === ""){
         gameboard.children[x+21].appendChild(puckimg(color));
+        toggleColor();
+        play.children[currentchoice].innerHTML = "";
+        currentchoice = 0;
+        play.children[currentchoice].appendChild(puckimg(currentcolor))
+
     }else if(gameboard.children[x+14].innerHTML === ""){
         gameboard.children[x+14].appendChild(puckimg(color));
+        toggleColor();
+        play.children[currentchoice].innerHTML = "";
+        currentchoice = 0;
+        play.children[currentchoice].appendChild(puckimg(currentcolor))
+
     }else if(gameboard.children[x+7].innerHTML === ""){
         gameboard.children[x+7].appendChild(puckimg(color));
+        toggleColor();
+        play.children[currentchoice].innerHTML = "";
+        currentchoice = 0;
+        play.children[currentchoice].appendChild(puckimg(currentcolor))
+
     }else if(gameboard.children[x].innerHTML === ""){
         gameboard.children[x].appendChild(puckimg(color));
+        toggleColor();
+        play.children[currentchoice].innerHTML = "";
+        currentchoice = 0;
+        play.children[currentchoice].appendChild(puckimg(currentcolor))
+
     }else{
         return;
     }
