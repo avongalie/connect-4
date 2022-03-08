@@ -20,9 +20,11 @@ When a player wins by having 4 pieces in a row, a win screen will appear.
 - Has different color tiles for each player.
 - Displays a 7 x 6 game board.
 - Allows a player to win when getting 4 pieces in a row.
+- Have a restart button for the game and to change player names.
 
 ### Stretch goals: 
+- Allow players to choose color scheme.
+- Add timeout for each player turn
+- Add pause button
 - Have an animation on the game board when the game begins.
 - Have an animation between player turns.
-- Have a restart button for the game and to change player names.
-- Allow players to choose color scheme.
