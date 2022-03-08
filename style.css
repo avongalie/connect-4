@@ -1,0 +1,29 @@
+#gameboard {
+    display: grid;
+    border: 1px solid black;
+    width: 77%;
+    max-width: 650px;
+    margin: 0 auto;
+    grid-template-columns: auto auto auto auto auto auto auto;
+}
+#gameboard > div  {
+    border: 1px solid black;
+    height: 0;
+    padding-bottom: 100%; 
+}
+#play{
+    display: grid;
+    width: 77%;
+    max-width: 650px;
+    border: 1px solid red;
+    margin: 0 auto;
+    grid-template-columns: auto auto auto auto auto auto auto;
+}
+#play > div  {
+    border: 1px solid red;
+    height: 0;
+    padding-bottom: 100%; 
+}
+#startPage {
+    display: none;
+}
