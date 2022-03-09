@@ -1,20 +1,53 @@
+const startPage = document.getElementById("startPage");
+const gamePage = document.getElementById("gamePage");
+const endPage = document.getElementById("endPage");
 const play = document.getElementById("play");
 const gameboard = document.getElementById("gameboard");
+const startButton = document.getElementById("start");
+const restartButton = document.getElementById("restart");
+const nameSwitchButton = document.getElementById("nameSwitch");
+const name1Input = document.getElementById("name1");
+const name2Input = document.getElementById("name2");
+const play1 = document.getElementById("p1");
+const play2 = document.getElementById("p2");
+const winpuck = document.getElementById("winpuck");
 
 let currentchoice = 0;
 let currentcolor = 'red';
 let win = false;
+let player1 = "";
+let player2 = "";
+let controls = "mouse";
 
+function toggleControls(){
+    if(controls === 'keyboard'){
+        currentcolor = 'mouse'
+    }else{
+        currentcolor = 'keyboard'
+    }
+}
+
+function startGame(){
+    player1 = name1Input.value;
+    player2 = name2Input.value;
+    startPage.classList.add("hidden");
+    gamePage.classList.remove("hidden");
+    if(controls === 'keyboard') keyboardControls();
+    if(controls === 'mouse') mouseControls();
+    //create some function to toggle controls in game
+    play1.innerHTML = player1;
+    play2.innerHTML = player2;
+}
+startButton.onclick = startGame;
 
 //for keyboard;
-play.children[0].appendChild(puckimg(currentcolor))
 
 //for mouse - start with no puck
 
-mouseControls();
 
 //controls keyboard listeners
 function keyboardControls(){
+play.children[0].appendChild(puckimg(currentcolor))
 window.addEventListener('keydown', keyc)
 }
 
@@ -120,6 +153,7 @@ function prepNextTurn(){
     play.children[currentchoice].innerHTML = "";
     if(win === true){
         stopControls();
+        endGame();
         return;
     }
     toggleColor();
@@ -208,7 +242,38 @@ function getDiagonal(a, index, increment){
     return r;
 }
 
+//ends Game and displays winner
+//need to add tie funcitions
+function endGame(){
+    if(win === true){
+        gamePage.classList.add("hidden");
+        endPage.classList.remove("hidden");
+        winpuck.src = `images/${currentcolor}_puck.png`
+    }
+}
 
+//restart game withe same characters
+function restartGame(){
+    win = false;
+    endPage.classList.add("hidden");
+    gamePage.classList.remove("hidden");
+    clearboard();
+    if(controls === 'keyboard') keyboardControls();
+    if(controls === 'mouse') mouseControls();
+    //create some function to toggle controls in game
+    play1.innerHTML = player1;
+    play2.innerHTML = player2;
+
+}
+
+restartButton.onclick = restartGame;
+
+//clears board
+function clearboard(){
+    for(let i = 0; i < gameboard.children.length; i++){
+        gameboard.children[i].innerHTML = "";
+    }
+}
 
 /*
 board game represented by numbers to demonstrate win conditionals

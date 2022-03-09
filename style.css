@@ -22,7 +22,7 @@
     height: 93px; 
     width: 93px;
 }
-#startPage {
+.hidden {
     display: none;
 }
 
