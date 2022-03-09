@@ -18,9 +18,14 @@ let currentcolor = 'red';
 //     targete.appendChild(x);
 // }
 
-play.children[0].appendChild(puckimg('red'))
+//for keyboard;
+play.children[0].appendChild(puckimg(currentcolor))
+
+//for mouse - start with no puck
+
 
 //controls keyboard listeners
+function keyboardControls(){
 window.addEventListener('keydown', function(event){
     console.log(event);
     let p = puckimg(currentcolor);
@@ -41,6 +46,28 @@ window.addEventListener('keydown', function(event){
         playerTurn(currentchoice, currentcolor);
     }
 })
+}
+
+function mouseControls(){
+    play.addEventListener('mouseover', function(event){
+        let e = event.target;
+        console.log(e.id)
+        if(e.id === "play" || e.id === "")return;
+        console.log(currentchoice)
+        play.children[currentchoice].innerHTML = "";
+        //console.log(e);
+        currentchoice = e.id-1;
+        let p = puckimg(currentcolor);
+        p.style.opacity = "0.5";
+        play.children[currentchoice].appendChild(p);
+        
+    })
+    play.onclick = function(){
+        playerTurn(currentchoice, currentcolor);
+    }
+}
+
+mouseControls();
 
 //switchs color of puck
 function toggleColor(){
