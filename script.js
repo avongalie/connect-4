@@ -3,6 +3,7 @@ const gameboard = document.getElementById("gameboard");
 
 let currentchoice = 0;
 let currentcolor = 'red';
+let win = false;
 
 
 //for keyboard;
@@ -10,10 +11,14 @@ play.children[0].appendChild(puckimg(currentcolor))
 
 //for mouse - start with no puck
 
+mouseControls();
 
 //controls keyboard listeners
 function keyboardControls(){
-window.addEventListener('keydown', function(event){
+window.addEventListener('keydown', keyc)
+}
+
+function keyc(event){
     console.log(event);
     let p = puckimg(currentcolor);
     switch(event.key){
@@ -32,28 +37,33 @@ window.addEventListener('keydown', function(event){
         case 'Enter':
         playerTurn(currentchoice, currentcolor);
     }
-})
 }
 
 function mouseControls(){
-    play.addEventListener('mouseover', function(event){
-        let e = event.target;
-        //console.log(e.id)
-        if(e.id === "play" || e.id === "")return;
-        //console.log(currentchoice)
-        play.children[currentchoice].innerHTML = "";
-        currentchoice = e.id-1;
-        let p = puckimg(currentcolor);
-        p.style.opacity = "0.5";
-        play.children[currentchoice].appendChild(p);
-        
-    })
+    play.addEventListener('mouseover', mousec)
     play.onclick = function(){
         playerTurn(currentchoice, currentcolor);
     }
 }
 
-mouseControls();
+function mousec(event){
+    let e = event.target;
+    //console.log(e.id)
+    if(e.id === "play" || e.id === "")return;
+    //console.log(currentchoice)
+    play.children[currentchoice].innerHTML = "";
+    currentchoice = e.id-1;
+    let p = puckimg(currentcolor);
+    p.style.opacity = "0.5";
+    play.children[currentchoice].appendChild(p);
+    
+}
+
+function stopControls(){
+    play.removeEventListener('mouseover', mousec);
+    play.onclick = "";
+    window.removeEventListener('keydown', keyc);
+}
 
 //switchs color of puck
 function toggleColor(){
@@ -64,29 +74,15 @@ function toggleColor(){
     }
 }
 
-0
-7
-14
-21
-28
-35
-
 //creates new puck image
 function puckimg(color){
     let x = document.createElement("img");
     x.style.width = "93px";
-    switch(color){
-        case 'red':
-            x.src ="images/red_puck.png";
-            return x;
-            break;
-        case 'yellow':
-            x.src ="images/yellow_puck.png";
-            return x;
-    }
+    x.src =`images/${color}_puck.png`;
+    return x;
 }
 
-//places puck in correct space
+//places puck in correct space and acts as a turn
 function playerTurn(x, color){
     if(gameboard.children[x+35].innerHTML === ""){
         gameboard.children[x+35].appendChild(puckimg(color));
@@ -121,15 +117,17 @@ function playerTurn(x, color){
 //sets up next turn
 function prepNextTurn(){
     checkWin();
-    toggleColor();
     play.children[currentchoice].innerHTML = "";
+    if(win === true){
+        stopControls();
+        return;
+    }
+    toggleColor();
     currentchoice = 0;
     play.children[currentchoice].appendChild(puckimg(currentcolor))
 }
 
-
-
-
+//checks board to see if anyone won
 function checkWin(){
     let currentboard = [];
     for(let i = 0; i < gameboard.children.length; i++){
@@ -181,7 +179,7 @@ function checkWin(){
             if(item[i] === 1){
                 c++;
                 if(c === 4){
-                    console.log("Winner")
+                    win = true;
                     break;
                 }
             }else{
@@ -209,6 +207,8 @@ function getDiagonal(a, index, increment){
     }
     return r;
 }
+
+
 
 /*
 board game represented by numbers to demonstrate win conditionals
