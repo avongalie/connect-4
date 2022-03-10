@@ -11,20 +11,31 @@ const name2Input = document.getElementById("name2");
 const play1 = document.getElementById("p1");
 const play2 = document.getElementById("p2");
 const winpuck = document.getElementById("winpuck");
+const textControls = document.getElementById('textControls');
+const mouseButton = document.getElementById("mouse");
+const keyboardButton = document.getElementById("keyboard");
+
 
 let currentchoice = 0;
 let currentcolor = 'red';
 let win = false;
 let player1 = "";
 let player2 = "";
-let controls = "mouse";
+let controls = "keyboard";
+
+
+restartButton.onclick = restartGame;
+startButton.onclick = startGame;
+mouseButton.onclick = toggleControls;
+keyboardButton.onclick = toggleControls;
 
 function toggleControls(){
     if(controls === 'keyboard'){
-        currentcolor = 'mouse'
+        controls = 'mouse';
     }else{
-        currentcolor = 'keyboard'
+        controls = 'keyboard';
     }
+    textControls.innerText = `Controls: ${controls}`
 }
 
 function startGame(){
@@ -34,21 +45,25 @@ function startGame(){
     gamePage.classList.remove("hidden");
     if(controls === 'keyboard') keyboardControls();
     if(controls === 'mouse') mouseControls();
-    //create some function to toggle controls in game
+    //toggle controls in game
+    mouseButton.onclick = mouseControls;
+    keyboardButton.onclick = keyboardControls;
     play1.innerHTML = player1;
     play2.innerHTML = player2;
 }
-startButton.onclick = startGame;
-
-//for keyboard;
-
-//for mouse - start with no puck
-
 
 //controls keyboard listeners
 function keyboardControls(){
-play.children[0].appendChild(puckimg(currentcolor))
-window.addEventListener('keydown', keyc)
+    play.children[currentchoice].innerHTML = "";
+    controls = 'keyboard';
+    //removesmouse controls
+    play.removeEventListener('mouseover', mousec);
+    play.onclick = "";
+
+    //sets keyboard controls
+    play.children[currentchoice].appendChild(puckimg(currentcolor))
+    window.addEventListener('keydown', keyc)
+    textControls.innerText = `Controls: ${controls}`
 }
 
 function keyc(event){
@@ -73,10 +88,16 @@ function keyc(event){
 }
 
 function mouseControls(){
+    play.children[0].innerHTML = "";
+    controls = 'mouse';
+    //removes keyboard controls
+    window.removeEventListener('keydown', keyc);
+    //sets mouse controls
     play.addEventListener('mouseover', mousec)
     play.onclick = function(){
         playerTurn(currentchoice, currentcolor);
     }
+    textControls.innerText = `Controls: ${controls}`;
 }
 
 function mousec(event){
@@ -260,13 +281,8 @@ function restartGame(){
     clearboard();
     if(controls === 'keyboard') keyboardControls();
     if(controls === 'mouse') mouseControls();
-    //create some function to toggle controls in game
-    play1.innerHTML = player1;
-    play2.innerHTML = player2;
-
 }
 
-restartButton.onclick = restartGame;
 
 //clears board
 function clearboard(){
