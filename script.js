@@ -28,7 +28,8 @@ let player2 = "";
 let controls = "keyboard";
 
 
-restartButton.onclick = restartGame;
+restartButton.onclick = playAgain;
+nameSwitchButton.onclick = switchNames;
 startButton.onclick = startGame;
 mouseButton.onclick = toggleControls;
 keyboardButton.onclick = toggleControls;
@@ -46,7 +47,7 @@ function startGame(){
     player1 = name1Input.value.trim();
     player2 = name2Input.value.trim();
     //wont start if no name
-    //if(player1 === "" || player2 === "") return;
+    if(player1 === "" || player2 === "") return;
     startPage.classList.add("hidden");
     gamePage.classList.remove("hidden");
     if(controls === 'keyboard') keyboardControls();
@@ -291,13 +292,23 @@ function restartGame(){
     moves = 0;
     tie = false;
     win = false;
-    endPage.classList.add("hidden");
-    gamePage.classList.remove("hidden");
     clearboard();
+    endPage.classList.add("hidden");  
+}
+function playAgain(){
+    restartGame();
+    gamePage.classList.remove("hidden");
     if(controls === 'keyboard') keyboardControls();
     if(controls === 'mouse') mouseControls();
+    
 }
 
+function switchNames(){
+    restartGame();
+    startPage.classList.remove("hidden");
+    name1Input.value = "";
+    name2Input.value = "";
+}
 
 //clears board
 function clearboard(){
