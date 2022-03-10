@@ -282,7 +282,7 @@ function endGame(){
     }
     if(tie === true){
         winPlayerText.innerHTML = "Tie!"
-        winpuck.innerHTML = "";
+        winpuck.src = "";
     }
 }
 
