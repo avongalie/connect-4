@@ -1,6 +1,65 @@
+body {
+    background-color: #85b5f9;
+    color: white;
+    text-align: center;
+}
+input{
+    font-size: 20px;
+    padding: 3px;
+}
+#start, #restart, #nameSwitch{
+    color: #4f4141;
+    font-size: 20px;
+    padding: 10px 50px;
+    border: none;
+}
+#start:hover, #restart:hover{
+    color: black;
+    background-color: #f56d63;
+    cursor: pointer;
+}
+#nameSwitch:hover{
+    color: black;
+    background-color: #fdc200;
+    cursor: pointer;
+
+}
+#restart{
+    background-color: #f2968f;
+    margin-right: 20px;
+}
+#start{
+    background-color: #f2968f;
+}
+#nameSwitch{
+    background-color: #fbd249;
+    margin-left: 20px;
+}
+#startPage{
+    font-size: 30px;
+}
+#players{
+    display: flex;
+    justify-content: space-around;
+}
+#players > p {
+    font-size: 40px;
+    margin: 10px auto;
+}
+#colorgame{
+    position: absolute;
+    z-index: -1;
+    display: flex;
+    border: 1px solid black;
+    width: 663px;
+    height: 569px;
+    justify-content: center;
+    background-color: beige;
+}
+
 #gameboard {
     display: grid;
-    border: 1px solid black;
+    border: 1px SOLID BLACK;
     width: 663px;
     margin: 0 auto;
     grid-template-columns: auto auto auto auto auto auto auto;
@@ -26,6 +85,10 @@
     position:fixed;
     right: 10px;
     bottom: 10px;
+}
+#winpuck {
+    width: 300px;
+    margin: 30px auto;
 }
 .hidden {
     display: none;

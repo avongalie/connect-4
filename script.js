@@ -1,3 +1,6 @@
+//UPDATES:
+//make use div for puck instead of imgs
+
 const startPage = document.getElementById("startPage");
 const gamePage = document.getElementById("gamePage");
 const endPage = document.getElementById("endPage");
@@ -15,6 +18,9 @@ const textControls = document.getElementById('textControls');
 const mouseButton = document.getElementById("mouse");
 const keyboardButton = document.getElementById("keyboard");
 const winPlayerText = document.getElementById("winningPlayer");
+const player1puckimg = document.getElementById("i1");
+const player2puckimg = document.getElementById("i2");
+
 
 let moves = 0;
 let currentchoice = 0;
@@ -57,8 +63,18 @@ function startGame(){
     keyboardButton.onclick = keyboardControls;
     play1.innerHTML = player1;
     play2.innerHTML = player2;
+    setPlayerPuckimg();
 }
 
+function setPlayerPuckimg(){
+    let p1img = puckimg(color1);
+    let p2img = puckimg(color2);
+    p1img.style.width = "50px";
+    p2img.style.width = "50px";
+    play1.append(p1img);
+    play2.append(p2img);
+
+}
 //controls keyboard listeners
 function keyboardControls(){
     play.children[currentchoice].innerHTML = "";
