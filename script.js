@@ -19,6 +19,8 @@ const winPlayerText = document.getElementById("winningPlayer");
 let moves = 0;
 let currentchoice = 0;
 let currentcolor = 'Red';
+let color1 = 'Red'
+let color2 = "Yellow"
 let win = false;
 let tie = false;
 let player1 = "";
@@ -125,10 +127,10 @@ function stopControls(){
 
 //switchs color of puck
 function toggleColor(){
-    if(currentcolor === 'red'){
-        currentcolor = 'yellow'
+    if(currentcolor === color1){
+        currentcolor = color2
     }else{
-        currentcolor = 'red'
+        currentcolor = color1
     }
 }
 
@@ -274,17 +276,20 @@ function getDiagonal(a, index, increment){
 function endGame(){
     gamePage.classList.add("hidden");
     endPage.classList.remove("hidden");
-    winpuck.src = `images/${currentcolor}_puck.png`
     if(win === true){
         winPlayerText.innerHTML = `${currentcolor} Won!`
+        winpuck.src = `images/${currentcolor}_puck.png`
     }
     if(tie === true){
         winPlayerText.innerHTML = "Tie!"
+        winpuck.innerHTML = "";
     }
 }
 
 //restart game withe same characters
 function restartGame(){
+    moves = 0;
+    tie = false;
     win = false;
     endPage.classList.add("hidden");
     gamePage.classList.remove("hidden");
