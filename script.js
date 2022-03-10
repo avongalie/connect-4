@@ -14,11 +14,13 @@ const winpuck = document.getElementById("winpuck");
 const textControls = document.getElementById('textControls');
 const mouseButton = document.getElementById("mouse");
 const keyboardButton = document.getElementById("keyboard");
+const winPlayerText = document.getElementById("winningPlayer");
 
-
+let moves = 0;
 let currentchoice = 0;
-let currentcolor = 'red';
+let currentcolor = 'Red';
 let win = false;
+let tie = false;
 let player1 = "";
 let player2 = "";
 let controls = "keyboard";
@@ -39,8 +41,10 @@ function toggleControls(){
 }
 
 function startGame(){
-    player1 = name1Input.value;
-    player2 = name2Input.value;
+    player1 = name1Input.value.trim();
+    player2 = name2Input.value.trim();
+    //wont start if no name
+    //if(player1 === "" || player2 === "") return;
     startPage.classList.add("hidden");
     gamePage.classList.remove("hidden");
     if(controls === 'keyboard') keyboardControls();
@@ -88,7 +92,7 @@ function keyc(event){
 }
 
 function mouseControls(){
-    play.children[0].innerHTML = "";
+    play.children[currentchoice].innerHTML = "";
     controls = 'mouse';
     //removes keyboard controls
     window.removeEventListener('keydown', keyc);
@@ -170,15 +174,16 @@ function playerTurn(x, color){
 
 //sets up next turn
 function prepNextTurn(){
-    checkWin();
+    moves++;
+    if(moves > 6) checkWin();
     play.children[currentchoice].innerHTML = "";
-    if(win === true){
+    if(win === true||tie === true){
         stopControls();
         endGame();
         return;
     }
     toggleColor();
-    currentchoice = 0;
+    //currentchoice = 0;
     play.children[currentchoice].appendChild(puckimg(currentcolor))
 }
 
@@ -243,6 +248,7 @@ function checkWin(){
         }
 
     })
+    if(moves === 42) tie = true;
 }
 
 //returns columns of board
@@ -266,10 +272,14 @@ function getDiagonal(a, index, increment){
 //ends Game and displays winner
 //need to add tie funcitions
 function endGame(){
+    gamePage.classList.add("hidden");
+    endPage.classList.remove("hidden");
+    winpuck.src = `images/${currentcolor}_puck.png`
     if(win === true){
-        gamePage.classList.add("hidden");
-        endPage.classList.remove("hidden");
-        winpuck.src = `images/${currentcolor}_puck.png`
+        winPlayerText.innerHTML = `${currentcolor} Won!`
+    }
+    if(tie === true){
+        winPlayerText.innerHTML = "Tie!"
     }
 }
 
