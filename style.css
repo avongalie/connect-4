@@ -59,25 +59,25 @@ input{
 
 #gameboard {
     display: grid;
-    border: 1px SOLID BLACK;
+    /* border: 1px SOLID BLACK; */
     width: 663px;
     margin: 0 auto;
     grid-template-columns: auto auto auto auto auto auto auto;
 }
 #gameboard > div  {
-    border: 1px solid black;
+    border: 1px solid #106be0;
     height: 93px; 
     width: 93px;
 }
 #play{
     display: grid;
     width: 663px;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     margin: 0 auto;
     grid-template-columns: auto auto auto auto auto auto auto;
 }
 #play > div  {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     height: 93px; 
     width: 93px;
 }
