@@ -20,11 +20,13 @@ const keyboardButton = document.getElementById("keyboard");
 const winPlayerText = document.getElementById("winningPlayer");
 const player1puckimg = document.getElementById("i1");
 const player2puckimg = document.getElementById("i2");
+const playersdiv = document.getElementById("players");
 
 
 let moves = 0;
 let currentchoice = 0;
 let currentcolor = 'Red';
+let currentplayer = "";
 let color1 = 'Red'
 let color2 = "Yellow"
 let win = false;
@@ -65,19 +67,21 @@ function startGame(){
     keyboardButton.onclick = keyboardControls;
     play1.innerHTML = player1;
     play2.innerHTML = player2;
-    setPlayerPuckimg();
+    currentplayer = player1;
+    //setPlayerPuckimg();
+
+    play1.append(puckimg(color1));
+    play2.append(puckimg(color2));
 }
 
-//sets icons for players
-function setPlayerPuckimg(){
-    let p1img = puckimg(color1);
-    let p2img = puckimg(color2);
-    p1img.style.width = "50px";
-    p2img.style.width = "50px";
-    play1.append(p1img);
-    play2.append(p2img);
-
+//creates new puck image (now only used in player icons)
+function puckimg(color){
+    let x = document.createElement("img");
+    x.style.width = "50px";
+    x.src =`images/${color}_puck.png`;
+    return x;
 }
+
 
 //controls keyboard listeners
 function keyboardControls(){
@@ -137,8 +141,6 @@ function mousec(event){
     if(e.id === "play" || e.id === "")return;
     play.children[currentchoice].className = "";
     currentchoice = e.id-1;
-    let p = puckimg(currentcolor);
-    p.style.opacity = "0.5";
     play.children[currentchoice].classList.add(`${currentcolor}puck`)
     play.children[currentchoice].style.opacity = "0.5";
     
@@ -154,20 +156,13 @@ function stopControls(){
 //switchs color of puck
 function toggleColor(){
     if(currentcolor === color1){
-        currentcolor = color2
+        currentplayer = player2;
+        currentcolor = color2;
     }else{
-        currentcolor = color1
+        currentcolor = color1;
+        currentplayer = player1;
     }
 }
-
-//creates new puck image (now only used in player icons + end screen)
-function puckimg(color){
-    let x = document.createElement("img");
-    x.style.width = "93px";
-    x.src =`images/${color}_puck.png`;
-    return x;
-}
-
 
 //places puck in correct space and acts as a turn
 function playerTurn(x, color){
@@ -213,10 +208,11 @@ function prepNextTurn(){
     if(moves > 6) checkWin();
     play.children[currentchoice].classList.remove(`${currentcolor}puck`);
     if(win === true||tie === true){
+       playersdiv.innerHTML = `${currentplayer} wins!`;
+        stopControls();
         setTimeout(() => {
-            stopControls();
             endGame();
-        }, 1500)
+        }, 2500)
         return;
     }
     toggleColor();
@@ -311,7 +307,7 @@ function endGame(){
     gamePage.classList.add("hidden");
     endPage.classList.remove("hidden");
     if(win === true){
-        winPlayerText.innerHTML = `${currentcolor} Won!`
+        winPlayerText.innerHTML = `${currentplayer} Won!`
         winpuck.src = `images/${currentcolor}_puck.png`
     }
     if(tie === true){

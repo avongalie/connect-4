@@ -41,6 +41,7 @@ input{
 #players{
     display: flex;
     justify-content: space-around;
+    font-size: 40px;
 }
 #players > p {
     font-size: 40px;
