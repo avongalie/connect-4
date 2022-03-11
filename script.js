@@ -21,6 +21,7 @@ const winPlayerText = document.getElementById("winningPlayer");
 const player1puckimg = document.getElementById("i1");
 const player2puckimg = document.getElementById("i2");
 const playersdiv = document.getElementById("players");
+const textTimer = document.getElementById("timer");
 
 
 let moves = 0;
@@ -34,6 +35,7 @@ let tie = false;
 let player1 = "";
 let player2 = "";
 let controls = "keyboard";
+let timer = 20;
 
 
 restartButton.onclick = playAgain;
@@ -69,9 +71,9 @@ function startGame(){
     play2.innerHTML = player2;
     currentplayer = player1;
     //setPlayerPuckimg();
-
     play1.append(puckimg(color1));
     play2.append(puckimg(color2));
+    setTimer();
 }
 
 //creates new puck image (now only used in player icons)
@@ -117,7 +119,7 @@ function keyc(event){
         play.children[currentchoice].classList.add(`${currentcolor}puck`);
         break;
         case 'Enter':
-        playerTurn(currentchoice, currentcolor);
+        playerTurn(currentchoice);
     }
 }
 
@@ -130,7 +132,7 @@ function mouseControls(){
     //sets mouse controls
     play.addEventListener('mouseover', mousec)
     play.onclick = function(){
-        playerTurn(currentchoice, currentcolor);
+        playerTurn(currentchoice);
     }
     textControls.innerText = `Controls: ${controls}`;
 }
@@ -165,9 +167,8 @@ function toggleColor(){
 }
 
 //places puck in correct space and acts as a turn
-function playerTurn(x, color){
+function playerTurn(x){
     if(gameboard.children[x+35].classList[0] === "empty"){
-        //gameboard.children[x+35].appendChild(puckimg(color));
         gameboard.children[x+35].classList.remove("empty");
         gameboard.children[x+35].classList.add(`${currentcolor}filled`)
         prepNextTurn();
@@ -198,13 +199,14 @@ function playerTurn(x, color){
         prepNextTurn();
         
     }else{
-        return;
+        return false;
     }
 }
 
 //sets up next turn
 function prepNextTurn(){
     moves++;
+    timer = 20;
     if(moves > 6) checkWin();
     play.children[currentchoice].classList.remove(`${currentcolor}puck`);
     if(win === true||tie === true){
@@ -216,6 +218,7 @@ function prepNextTurn(){
         return;
     }
     toggleColor();
+    setTimer();
     //currentchoice = 0;
     play.children[currentchoice].classList.add(`${currentcolor}puck`);
 }
@@ -306,6 +309,7 @@ function getDiagonal(a, index, increment){
 function endGame(){
     gamePage.classList.add("hidden");
     endPage.classList.remove("hidden");
+    clearInterval(setTimer);
     if(win === true){
         winPlayerText.innerHTML = `${currentplayer} Won!`
         winpuck.src = `images/${currentcolor}_puck.png`
@@ -348,6 +352,28 @@ function clearboard(){
         gameboard.children[i].className = "";
         gameboard.children[i].classList.add("empty");
     }
+}
+
+function setTimer(){
+    textTimer.innerText = `Timer: ${timer}`;
+    let timerInterval = setInterval(()=>{
+        timer-=1;
+        textTimer.innerText = `Timer: ${timer}`;
+        if(timer === 0){
+            clearInterval(timerInterval);
+            let turn = playerTurn(currentchoice);
+            if(turn === false){
+                for(let i = currentchoice+1; i != currentchoice; i++){
+                    console.log(i);
+                    if(i === 7){
+                        i = 0;
+                    }
+                    let iturn = playerTurn(i);
+                    if(iturn != false) return;
+                }
+            }
+        }
+    },1000)
 }
 
 /*
