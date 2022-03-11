@@ -48,20 +48,13 @@ startButton.onclick = startGame;
 mouseButton.onclick = setMouse;
 keyboardButton.onclick = setKeyboard;
 
-// //switchs controls variable
-// function toggleControls(){
-//     if(controls === 'keyboard'){
-//         controls = 'mouse';
-//     }else{
-//         controls = 'keyboard';
-//     }
-//     textControls.innerText = `Controls: ${controls}`
-// }
-
+//sets controls to keyboard
 function setKeyboard(){
     controls = "keyboard";
     textControls.innerText = `Controls: ${controls}`
 }
+
+// sets controls to mouse
 function setMouse(){
     controls = "mouse";
     textControls.innerText = `Controls: ${controls}`
@@ -220,7 +213,7 @@ function playerTurn(x){
 //sets up next turn
 function prepNextTurn(){
     moves++;
-    timer = 20;
+    clearInterval(timerInterval);
     if(moves > 6) checkWin();
     play.children[currentchoice].classList.remove(`${currentcolor}puck`);
     if(win === true||tie === true){
@@ -369,8 +362,10 @@ function clearboard(){
 }
 
 function setTimer(){
+    timer = 20;
     textTimer.innerText = `Timer: ${timer}`;
     timerInterval = setInterval(()=>{
+        console.log("running");
         timer-=1;
         textTimer.innerText = `Timer: ${timer}`;
         if(timer === 0){
