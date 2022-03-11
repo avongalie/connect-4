@@ -55,7 +55,7 @@ function startGame(){
     player1 = name1Input.value.trim();
     player2 = name2Input.value.trim();
     //wont start if no name
-    //if(player1 === "" || player2 === "") return;
+    if(player1 === "" || player2 === "") return;
     startPage.classList.add("hidden");
     gamePage.classList.remove("hidden");
     if(controls === 'keyboard') keyboardControls();
@@ -81,7 +81,10 @@ function setPlayerPuckimg(){
 
 //controls keyboard listeners
 function keyboardControls(){
-    //play.children[currentchoice].innerHTML = "";
+    //removes opacity overlaying from mouse controls
+    for(let i = 0; i < play.children.length; i++){
+        play.children[i].style.opacity = "1";
+    }
     controls = 'keyboard';
     //removesmouse controls
     play.removeEventListener('mouseover', mousec);
