@@ -213,8 +213,10 @@ function prepNextTurn(){
     if(moves > 6) checkWin();
     play.children[currentchoice].classList.remove(`${currentcolor}puck`);
     if(win === true||tie === true){
-        stopControls();
-        endGame();
+        setTimeout(() => {
+            stopControls();
+            endGame();
+        }, 1500)
         return;
     }
     toggleColor();
