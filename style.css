@@ -94,3 +94,8 @@ input{
     display: none;
 }
 
+.empty {content: url(Images/empty.png);}
+.Redpuck {content: url(Images/red_puck.png)}
+.Yellowpuck {content: url(Images/yellow_puck.png)}
+.Redfilled {content: url(images/red_filled.png)}
+.Yellowfilled {content: url(images/yellow_filled.png)}

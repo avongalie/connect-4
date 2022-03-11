@@ -40,6 +40,7 @@ startButton.onclick = startGame;
 mouseButton.onclick = toggleControls;
 keyboardButton.onclick = toggleControls;
 
+//switchs controls variable
 function toggleControls(){
     if(controls === 'keyboard'){
         controls = 'mouse';
@@ -49,11 +50,12 @@ function toggleControls(){
     textControls.innerText = `Controls: ${controls}`
 }
 
+//begins game from start page
 function startGame(){
     player1 = name1Input.value.trim();
     player2 = name2Input.value.trim();
     //wont start if no name
-    if(player1 === "" || player2 === "") return;
+    //if(player1 === "" || player2 === "") return;
     startPage.classList.add("hidden");
     gamePage.classList.remove("hidden");
     if(controls === 'keyboard') keyboardControls();
@@ -66,6 +68,7 @@ function startGame(){
     setPlayerPuckimg();
 }
 
+//sets icons for players
 function setPlayerPuckimg(){
     let p1img = puckimg(color1);
     let p2img = puckimg(color2);
@@ -75,43 +78,45 @@ function setPlayerPuckimg(){
     play2.append(p2img);
 
 }
+
 //controls keyboard listeners
 function keyboardControls(){
-    play.children[currentchoice].innerHTML = "";
+    //play.children[currentchoice].innerHTML = "";
     controls = 'keyboard';
     //removesmouse controls
     play.removeEventListener('mouseover', mousec);
     play.onclick = "";
 
     //sets keyboard controls
-    play.children[currentchoice].appendChild(puckimg(currentcolor))
+    play.children[currentchoice].classList.add(`${currentcolor}puck`);
     window.addEventListener('keydown', keyc)
     textControls.innerText = `Controls: ${controls}`
 }
 
+//keyboard control functionality
 function keyc(event){
     console.log(event);
-    let p = puckimg(currentcolor);
     switch(event.key){
         case 'ArrowRight': 
         if(currentchoice === 6) return;
-        play.children[currentchoice].innerHTML = "";
+        play.children[currentchoice].classList.remove(`${currentcolor}puck`);
         currentchoice ++;
-        play.children[currentchoice].appendChild(p);
+        play.children[currentchoice].classList.add(`${currentcolor}puck`);
         break;
         case 'ArrowLeft': 
         if(currentchoice === 0) return;
-        play.children[currentchoice].innerHTML = "";
+        play.children[currentchoice].classList.remove(`${currentcolor}puck`);
         currentchoice --;
-        play.children[currentchoice].appendChild(p);
+        play.children[currentchoice].classList.add(`${currentcolor}puck`);
         break;
         case 'Enter':
         playerTurn(currentchoice, currentcolor);
     }
 }
 
+//controls mouse listeners
 function mouseControls(){
-    play.children[currentchoice].innerHTML = "";
+    //play.children[currentchoice].innerHTML = "";
     controls = 'mouse';
     //removes keyboard controls
     window.removeEventListener('keydown', keyc);
@@ -123,19 +128,20 @@ function mouseControls(){
     textControls.innerText = `Controls: ${controls}`;
 }
 
+//mouse control functionality
 function mousec(event){
     let e = event.target;
-    //console.log(e.id)
     if(e.id === "play" || e.id === "")return;
-    //console.log(currentchoice)
-    play.children[currentchoice].innerHTML = "";
+    play.children[currentchoice].className = "";
     currentchoice = e.id-1;
     let p = puckimg(currentcolor);
     p.style.opacity = "0.5";
-    play.children[currentchoice].appendChild(p);
+    play.children[currentchoice].classList.add(`${currentcolor}puck`)
+    play.children[currentchoice].style.opacity = "0.5";
     
 }
 
+//stops mosue and keyboard listeners
 function stopControls(){
     play.removeEventListener('mouseover', mousec);
     play.onclick = "";
@@ -151,7 +157,7 @@ function toggleColor(){
     }
 }
 
-//creates new puck image
+//creates new puck image (now only used in player icons + end screen)
 function puckimg(color){
     let x = document.createElement("img");
     x.style.width = "93px";
@@ -159,43 +165,50 @@ function puckimg(color){
     return x;
 }
 
+
 //places puck in correct space and acts as a turn
 function playerTurn(x, color){
-    if(gameboard.children[x+35].innerHTML === ""){
-        gameboard.children[x+35].appendChild(puckimg(color));
+    if(gameboard.children[x+35].classList[0] === "empty"){
+        //gameboard.children[x+35].appendChild(puckimg(color));
+        gameboard.children[x+35].classList.remove("empty");
+        gameboard.children[x+35].classList.add(`${currentcolor}filled`)
         prepNextTurn();
 
-    }else if(gameboard.children[x+28].innerHTML === ""){
-        gameboard.children[x+28].appendChild(puckimg(color));
+    }else if(gameboard.children[x+28].classList[0] === "empty"){
+        gameboard.children[x+28].classList.remove("empty");
+        gameboard.children[x+28].classList.add(`${currentcolor}filled`)
         prepNextTurn();
 
-    }else if(gameboard.children[x+21].innerHTML === ""){
-        gameboard.children[x+21].appendChild(puckimg(color));
+    }else if(gameboard.children[x+21].classList[0] === "empty"){
+        gameboard.children[x+21].classList.remove("empty");
+        gameboard.children[x+21].classList.add(`${currentcolor}filled`)
         prepNextTurn();
 
-    }else if(gameboard.children[x+14].innerHTML === ""){
-        gameboard.children[x+14].appendChild(puckimg(color));
+    }else if(gameboard.children[x+14].classList[0] === "empty"){
+        gameboard.children[x+14].classList.remove("empty");
+        gameboard.children[x+14].classList.add(`${currentcolor}filled`)
         prepNextTurn();
         
-    }else if(gameboard.children[x+7].innerHTML === ""){
-        gameboard.children[x+7].appendChild(puckimg(color));
+    }else if(gameboard.children[x+7].classList[0] === "empty"){
+        gameboard.children[x+7].classList.remove("empty");
+        gameboard.children[x+7].classList.add(`${currentcolor}filled`)
         prepNextTurn();
 
-    }else if(gameboard.children[x].innerHTML === ""){
-        gameboard.children[x].appendChild(puckimg(color));
+    }else if(gameboard.children[x].classList[0] === "empty"){
+        gameboard.children[x].classList.remove("empty");
+        gameboard.children[x].classList.add(`${currentcolor}filled`)
         prepNextTurn();
         
     }else{
         return;
     }
-   // console.log(gameboard.children[x+35].innerHTML);
 }
 
 //sets up next turn
 function prepNextTurn(){
     moves++;
     if(moves > 6) checkWin();
-    play.children[currentchoice].innerHTML = "";
+    play.children[currentchoice].classList.remove(`${currentcolor}puck`);
     if(win === true||tie === true){
         stopControls();
         endGame();
@@ -203,14 +216,14 @@ function prepNextTurn(){
     }
     toggleColor();
     //currentchoice = 0;
-    play.children[currentchoice].appendChild(puckimg(currentcolor))
+    play.children[currentchoice].classList.add(`${currentcolor}puck`);
 }
 
 //checks board to see if anyone won
 function checkWin(){
     let currentboard = [];
     for(let i = 0; i < gameboard.children.length; i++){
-        if(gameboard.children[i].innerHTML === `<img src="images/${currentcolor}_puck.png" style="width: 93px;">`){
+        if(gameboard.children[i].className === `${currentcolor}filled`){
             currentboard.push(1)
         }else{
             currentboard.push(0);
@@ -289,7 +302,6 @@ function getDiagonal(a, index, increment){
 }
 
 //ends Game and displays winner
-//need to add tie funcitions
 function endGame(){
     gamePage.classList.add("hidden");
     endPage.classList.remove("hidden");
@@ -303,7 +315,7 @@ function endGame(){
     }
 }
 
-//restart game withe same characters
+//restart game
 function restartGame(){
     moves = 0;
     tie = false;
@@ -311,6 +323,8 @@ function restartGame(){
     clearboard();
     endPage.classList.add("hidden");  
 }
+
+//enables play again function
 function playAgain(){
     restartGame();
     gamePage.classList.remove("hidden");
@@ -319,6 +333,7 @@ function playAgain(){
     
 }
 
+//allows players to switch names before replaying
 function switchNames(){
     restartGame();
     startPage.classList.remove("hidden");
@@ -329,7 +344,8 @@ function switchNames(){
 //clears board
 function clearboard(){
     for(let i = 0; i < gameboard.children.length; i++){
-        gameboard.children[i].innerHTML = "";
+        gameboard.children[i].className = "";
+        gameboard.children[i].classList.add("empty");
     }
 }
 
