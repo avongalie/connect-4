@@ -22,7 +22,8 @@ const player1puckimg = document.getElementById("i1");
 const player2puckimg = document.getElementById("i2");
 const playersdiv = document.getElementById("players");
 const textTimer = document.getElementById("timer");
-
+const pausePlayButton = document.getElementById("pauseplay");
+const pauseoverlay = document.getElementById("overlay");
 
 let moves = 0;
 let currentchoice = 0;
@@ -36,22 +37,35 @@ let player1 = "";
 let player2 = "";
 let controls = "keyboard";
 let timer = 20;
+let pause = false;
+
+let timerInterval = "";
 
 
 restartButton.onclick = playAgain;
 nameSwitchButton.onclick = switchNames;
 startButton.onclick = startGame;
-mouseButton.onclick = toggleControls;
-keyboardButton.onclick = toggleControls;
+mouseButton.onclick = setMouse;
+keyboardButton.onclick = setKeyboard;
 
-//switchs controls variable
-function toggleControls(){
-    if(controls === 'keyboard'){
-        controls = 'mouse';
-    }else{
-        controls = 'keyboard';
-    }
+// //switchs controls variable
+// function toggleControls(){
+//     if(controls === 'keyboard'){
+//         controls = 'mouse';
+//     }else{
+//         controls = 'keyboard';
+//     }
+//     textControls.innerText = `Controls: ${controls}`
+// }
+
+function setKeyboard(){
+    controls = "keyboard";
     textControls.innerText = `Controls: ${controls}`
+}
+function setMouse(){
+    controls = "mouse";
+    textControls.innerText = `Controls: ${controls}`
+
 }
 
 //begins game from start page
@@ -356,7 +370,7 @@ function clearboard(){
 
 function setTimer(){
     textTimer.innerText = `Timer: ${timer}`;
-    let timerInterval = setInterval(()=>{
+    timerInterval = setInterval(()=>{
         timer-=1;
         textTimer.innerText = `Timer: ${timer}`;
         if(timer === 0){
@@ -375,6 +389,29 @@ function setTimer(){
         }
     },1000)
 }
+
+function togglePausePlay(){
+    if(pause === false){
+        clearInterval(timerInterval);
+        stopControls();
+        mouseButton.onclick = setMouse;
+        keyboardButton.onclick = setKeyboard;   
+        pausePlayButton.src = "images/play.png"
+        pauseoverlay.classList.remove("hidden")
+        pause = true;
+    }else{
+        setTimer();
+        if(controls === 'keyboard') keyboardControls();
+        if(controls === 'mouse') mouseControls();
+        mouseButton.onclick = mouseControls;
+        keyboardButton.onclick = keyboardControls; 
+        pausePlayButton.src = "images/pause.png"
+        pauseoverlay.classList.add("hidden")
+        pause = false;
+    }
+}
+
+pausePlayButton.onclick = togglePausePlay;
 
 /*
 board game represented by numbers to demonstrate win conditionals
