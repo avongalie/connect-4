@@ -1,5 +1,6 @@
 //UPDATES:
 //make use div for puck instead of imgs
+//players should be able to click and toggle over gameboard not use play div
 
 const startPage = document.getElementById("startPage");
 const gamePage = document.getElementById("gamePage");
@@ -21,6 +22,7 @@ const winPlayerText = document.getElementById("winningPlayer");
 const player1puckimg = document.getElementById("i1");
 const player2puckimg = document.getElementById("i2");
 const playersdiv = document.getElementById("players");
+const winningPlayer = document.getElementById("winner");
 const textTimer = document.getElementById("timer");
 const pausePlayButton = document.getElementById("pauseplay");
 const pauseoverlay = document.getElementById("overlay");
@@ -126,7 +128,15 @@ function keyc(event){
         play.children[currentchoice].classList.add(`${currentcolor}puck`);
         break;
         case 'Enter':
-        playerTurn(currentchoice);
+            //TEST ANIMATION
+
+            //REMOVE ANIMATION ADD TIMEOUT TO EACH ROW KEYFRAME FOR EACH ROW ADD TO AUTOMATED TURNS
+       // play.children[currentchoice].style.animation = "test 1s linear";
+        //stopControls();
+        //setTimeout(()=>{
+          //  keyboardControls();
+        playerTurn(currentchoice)
+        //}, 950);
     }
 }
 
@@ -217,7 +227,9 @@ function prepNextTurn(){
     if(moves > 6) checkWin();
     play.children[currentchoice].classList.remove(`${currentcolor}puck`);
     if(win === true||tie === true){
-       playersdiv.innerHTML = `${currentplayer} wins!`;
+       winningPlayer.innerHTML = `${currentplayer} wins!`;
+       playersdiv.style.display = "none";
+       winningPlayer.classList.remove("hidden");
         stopControls();
         setTimeout(() => {
             endGame();
@@ -314,6 +326,8 @@ function getDiagonal(a, index, increment){
 
 //ends Game and displays winner
 function endGame(){
+    playersdiv.style.display = "flex";
+    winningPlayer.classList.add("hidden");
     gamePage.classList.add("hidden");
     endPage.classList.remove("hidden");
     clearInterval(setTimer);
@@ -365,7 +379,6 @@ function setTimer(){
     timer = 20;
     textTimer.innerText = `Timer: ${timer}`;
     timerInterval = setInterval(()=>{
-        console.log("running");
         timer-=1;
         textTimer.innerText = `Timer: ${timer}`;
         if(timer === 0){
