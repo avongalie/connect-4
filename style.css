@@ -120,12 +120,12 @@ input{
 }
 
 .empty {content: url(Images/empty.png);}
-.Redpuck {content: url(Images/red_puck.png); z-index: -1; position: relative;}
+.Redpuck {content: url(Images/red_puck.png); z-index: -1; position: relative; --length: 0;}
 .Yellowpuck {content: url(Images/yellow_puck.png); z-index: -1; position: relative;}
 .Redfilled {content: url(images/red_filled.png)}
 .Yellowfilled {content: url(images/yellow_filled.png)}
 
 @keyframes test {
     0%{top:0px}
-    100% {top:600px;}
+    100% {top: var(--length);}
 }

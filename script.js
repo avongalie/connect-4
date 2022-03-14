@@ -130,13 +130,8 @@ function keyc(event){
         case 'Enter':
             //TEST ANIMATION
 
-            //REMOVE ANIMATION ADD TIMEOUT TO EACH ROW KEYFRAME FOR EACH ROW ADD TO AUTOMATED TURNS
-       // play.children[currentchoice].style.animation = "test 1s linear";
-        //stopControls();
-        //setTimeout(()=>{
-          //  keyboardControls();
+            // ADD ANIMATION TO AUTOMATED TURNS
         playerTurn(currentchoice)
-        //}, 950);
     }
 }
 
@@ -149,6 +144,7 @@ function mouseControls(){
     //sets mouse controls
     play.addEventListener('mouseover', mousec)
     play.onclick = function(){
+        play.children[currentchoice].style.opacity = "1";
         playerTurn(currentchoice);
     }
     textControls.innerText = `Controls: ${controls}`;
@@ -186,34 +182,94 @@ function toggleColor(){
 //places puck in correct space and acts as a turn
 function playerTurn(x){
     if(gameboard.children[x+35].classList[0] === "empty"){
+        stopControls();
+        clearInterval(timerInterval);
+        play.children[x].style.setProperty('--length', '600px');
+        play.children[x].style.animation = "test 1s linear";
+
+        setTimeout(()=>{
+        if(controls === 'keyboard') keyboardControls();
+        if(controls === 'mouse') mouseControls();
+        play.children[x].style.animation = "";
         gameboard.children[x+35].classList.remove("empty");
         gameboard.children[x+35].classList.add(`${currentcolor}filled`)
         prepNextTurn();
+        }, 950);
 
     }else if(gameboard.children[x+28].classList[0] === "empty"){
+        stopControls();
+        clearInterval(timerInterval);
+        play.children[x].style.setProperty('--length', '525px');
+        play.children[x].style.animation = "test .83s linear";
+
+        setTimeout(()=>{
+        if(controls === 'keyboard') keyboardControls();
+        if(controls === 'mouse') mouseControls();
+        play.children[x].style.animation = "";
         gameboard.children[x+28].classList.remove("empty");
         gameboard.children[x+28].classList.add(`${currentcolor}filled`)
         prepNextTurn();
+        }, 780);
 
     }else if(gameboard.children[x+21].classList[0] === "empty"){
+        stopControls();
+        clearInterval(timerInterval);
+        play.children[x].style.setProperty('--length', '400px');
+        play.children[x].style.animation = "test .66s linear";
+
+        setTimeout(()=>{
+        if(controls === 'keyboard') keyboardControls();
+        if(controls === 'mouse') mouseControls();
+        play.children[x].style.animation = "";
         gameboard.children[x+21].classList.remove("empty");
         gameboard.children[x+21].classList.add(`${currentcolor}filled`)
         prepNextTurn();
+        }, 610);
 
     }else if(gameboard.children[x+14].classList[0] === "empty"){
+        stopControls();
+        clearInterval(timerInterval);
+        play.children[x].style.setProperty('--length', '315px');
+        play.children[x].style.animation = "test .5s linear";
+
+        setTimeout(()=>{
+        if(controls === 'keyboard') keyboardControls();
+        if(controls === 'mouse') mouseControls();
+        play.children[x].style.animation = "";
         gameboard.children[x+14].classList.remove("empty");
         gameboard.children[x+14].classList.add(`${currentcolor}filled`)
         prepNextTurn();
+        }, 450);
         
     }else if(gameboard.children[x+7].classList[0] === "empty"){
+        stopControls();
+        clearInterval(timerInterval);
+        play.children[x].style.setProperty('--length', '225px');
+        play.children[x].style.animation = "test .33s linear";
+
+        setTimeout(()=>{
+        if(controls === 'keyboard') keyboardControls();
+        if(controls === 'mouse') mouseControls();
+        play.children[currentchoice].style.animation = "";
         gameboard.children[x+7].classList.remove("empty");
         gameboard.children[x+7].classList.add(`${currentcolor}filled`)
         prepNextTurn();
+    }, 260);
 
     }else if(gameboard.children[x].classList[0] === "empty"){
+        stopControls();
+        clearInterval(timerInterval);
+        play.children[x].style.setProperty('--length', '100px');
+        play.children[x].style.animation = "test .16s linear";
+
+        setTimeout(()=>{
+        if(controls === 'keyboard') keyboardControls();
+        if(controls === 'mouse') mouseControls();
+        play.children[x].style.animation = "";
         gameboard.children[x].classList.remove("empty");
         gameboard.children[x].classList.add(`${currentcolor}filled`)
         prepNextTurn();
+    }, 110);
         
     }else{
         return false;
@@ -223,7 +279,6 @@ function playerTurn(x){
 //sets up next turn
 function prepNextTurn(){
     moves++;
-    clearInterval(timerInterval);
     if(moves > 6) checkWin();
     play.children[currentchoice].classList.remove(`${currentcolor}puck`);
     if(win === true||tie === true){
@@ -295,6 +350,7 @@ function checkWin(){
                 c++;
                 if(c === 4){
                     win = true;
+                    console.log(item)
                     break;
                 }
             }else{
@@ -389,9 +445,17 @@ function setTimer(){
                     console.log(i);
                     if(i === 7){
                         i = 0;
+                        play.children[6].classList.remove(`${currentcolor}puck`);
+                    }else{
+                        play.children[i-1].classList.remove(`${currentcolor}puck`);
                     }
+                    console.log(i-1)
+                    
+                    play.children[i].classList.add(`${currentcolor}puck`);
+                    currentchoice = i;
                     let iturn = playerTurn(i);
                     if(iturn != false) return;
+
                 }
             }
         }
