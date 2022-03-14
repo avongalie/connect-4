@@ -119,9 +119,9 @@ input{
     width: 40px;
 }
 
-.empty {content: url(Images/empty.png);}
-.Redpuck {content: url(Images/red_puck.png); z-index: -1; position: relative; --length: 0;}
-.Yellowpuck {content: url(Images/yellow_puck.png); z-index: -1; position: relative;}
+.empty {content: url(images/empty.png);}
+.Redpuck {content: url(images/red_puck.png); z-index: -1; position: relative; --length: 0;}
+.Yellowpuck {content: url(images/yellow_puck.png); z-index: -1; position: relative;}
 .Redfilled {content: url(images/red_filled.png)}
 .Yellowfilled {content: url(images/yellow_filled.png)}
 
